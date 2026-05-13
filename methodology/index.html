@@ -217,58 +217,86 @@ main.article hr{border:none;border-top:1px solid rgba(0,0,0,0.1);margin:48px 0}
 </header>
 
 <main class="article">
-<div class="wrap">
-<p class="kicker">Methodology</p><h1>The LP test database, in detail.</h1>
-<p class="dek">200+ anonymized A/B tests from real client accounts. Here&rsquo;s the framework: how tests get included, what counts as a winner, how confidence intervals work, and how vertical tagging shapes recommendations.</p>
-<div class="byline"><div class="av">A</div><div><strong style="color:var(--ink)">Aayushi Mehta</strong> · <a href="/about/">About</a> · <a href="https://www.linkedin.com/in/aayushi-mehtaa/" target="_blank" rel="noopener">LinkedIn</a></div></div>
 
-<h2>Inclusion criteria</h2>
-<p>For a test to enter the database, all of the following must be true:</p>
+<p class="kicker">Methodology</p>
+<h1>How the case studies are produced</h1>
+<p class="dek">The deployment protocol, the measurement framework, the anonymization standards, and how I decide what&rsquo;s worth publishing. Documented so readers can trust the numbers and journalists can verify the work.</p>
+
+<div class="byline">
+    <div class="av">A</div>
+    <div>
+        <strong>Aayushi Mehta</strong><br>
+        <span style="opacity:0.75">PPC manager &middot; <a href="https://www.linkedin.com/in/aayushi-mehtaa/" target="_blank" rel="noopener">LinkedIn</a></span>
+    </div>
+</div>
+
+<p class="lede">Every case study, newsletter issue, and comparison on this site is produced under the same protocol. The protocol is documented below so the work can be replicated, contested, or built on. Where the protocol has limitations, those are named explicitly rather than buried.</p>
+
+<h2>What counts as a case study</h2>
+
+<p>A &ldquo;case study&rdquo; on this site is the documentation of a single deployment of a single tool or configuration on a real client account, with measured outcomes over a fixed window. Specifically, each case meets the following criteria:</p>
+
 <ul>
-    <li>Run on a real paid-traffic landing page (not a list-build form, not a content page).</li>
-    <li>Minimum sample: 1,000 visitors per variant.</li>
-    <li>Test ran for at least 14 days (controls for day-of-week effects).</li>
-    <li>Statistical significance reached at 95% confidence, OR test concluded inconclusive after 30 days.</li>
-    <li>Single-variable change (multi-variable tests are excluded; we can&rsquo;t isolate which variable moved the number).</li>
-    <li>Account context tagged: vertical, spend tier, traffic source.</li>
+    <li><strong>Real client account.</strong> Active commercial engagement, not a sandbox or vendor demo.</li>
+    <li><strong>Pre-defined measurement window.</strong> Typically 75&ndash;90 days, set before the deployment begins.</li>
+    <li><strong>Control state documented.</strong> What was running before the change is recorded with the same metrics that will be used to measure after.</li>
+    <li><strong>Treatment state documented.</strong> The specific change &mdash; tool added, configuration switched, campaign restructured &mdash; is recorded in detail.</li>
+    <li><strong>Statistical-significance threshold.</strong> Where applicable, p &lt; 0.05 on weekly observations of the primary metric.</li>
 </ul>
 
-<h2>What gets recorded per test</h2>
-<ul>
-    <li>Test description (one sentence)</li>
-    <li>Vertical (apparel, B2B SaaS, fintech, etc.)</li>
-    <li>Spend tier ($5K&ndash;$10K, $10K&ndash;$50K, $50K&ndash;$200K, $200K+/mo)</li>
-    <li>Traffic source (paid search, paid social, organic)</li>
-    <li>Sample size per variant</li>
-    <li>Conversion rate baseline</li>
-    <li>Conversion rate winner</li>
-    <li>Lift (% relative)</li>
-    <li>Statistical confidence</li>
-    <li>Surprising or expected result (editor judgment)</li>
-</ul>
+<p>Cases that don&rsquo;t meet all five criteria don&rsquo;t get published. Sloppy methodology produces unreproducible results, which is worse than no results.</p>
 
-<h2>How recommendations get derived</h2>
-<p>For a test type to make it into a recommendation (e.g., &ldquo;reducing form fields lifts conversion&rdquo;), we require:</p>
-<ul>
-    <li>At least 3 independent tests of similar variant</li>
-    <li>Consistent direction across the tests (no clear contradictions)</li>
-    <li>Effect size large enough to matter at typical traffic volumes (&ge; 5% relative lift)</li>
-</ul>
-<p>Single tests can be informative but never become standalone recommendations. The pattern needs replication.</p>
+<h2>The deployment protocol</h2>
+
+<p>For tool-replacement cases (e.g., moving from Google Smart Bidding to a third-party bidder), the deployment runs as a control-vs-treatment test:</p>
+
+<ol>
+    <li><strong>Week 0:</strong> The control state is documented. Pre-test conversion data, ROAS, CPL, and account configuration are captured. A baseline measurement window of 30 days precedes the test where possible.</li>
+    <li><strong>Week 1:</strong> The treatment is deployed on a campaign subset (typically 50% of total spend). The control subset continues running unchanged.</li>
+    <li><strong>Weeks 1&ndash;2:</strong> The model&rsquo;s exploration phase. Performance is volatile; no judgments are drawn yet.</li>
+    <li><strong>Weeks 3&ndash;12 (or 3&ndash;13):</strong> The model stabilizes. Weekly metrics are recorded for both treatment and control. The primary metric (typically revenue-weighted ROAS) is the basis for the case&rsquo;s verdict.</li>
+    <li><strong>End of test:</strong> The verdict is decided based on statistical significance against the control. Cases that don&rsquo;t reach significance are still published &mdash; null results inform the reader.</li>
+</ol>
+
+<h2>The metrics</h2>
+
+<p>Primary metric is almost always <strong>revenue-weighted ROAS</strong> &mdash; revenue divided by ad spend, with revenue measured at the conversion event the client tracks as commercially meaningful. For B2B SaaS this is typically closed-won revenue (via offline conversion import); for ecom this is order-completed revenue net of returns where possible.</p>
+
+<p>Secondary metrics tracked depending on the case: cost-per-lead (for lead-gen accounts), AOV (for ecom), conversion rate (for landing-page A/B tests), and bid-ceiling adherence (for bidding-tool deployments).</p>
+
+<p>Reported ROAS (the number Google Ads or Meta Ads shows in their UI) is recorded but treated as supplementary &mdash; the agency&rsquo;s house view is that reported ROAS overstates profitability by 30&ndash;60% for most ecom and significantly less for B2B, so the primary metric reflects unit economics rather than platform reporting.</p>
 
 <h2>Anonymization</h2>
-<p>Client identity is never published. Test descriptions are scrubbed of identifying language. Vertical and spend-tier tags are deliberately broad. The aggregate insights are publishable; the underlying client work isn&rsquo;t.</p>
 
-<h2>Why Groas.ai earned #1 on a landing-page site</h2>
-<p>Counterintuitive at first &mdash; a bidding tool topping a landing-page list. The reason: LP wins compound through the bidding layer. Without revenue-weighted bid optimization, a 30% LP improvement gets partially absorbed into bid-cap ceilings rather than translating into spend efficiency. Groas re-bids based on the new LP performance within hours; Smart Bidding takes weeks. So the right LP stack actually starts with the bidding tool, not with the LP builder.</p>
+<p>All published case studies use anonymized client identifiers (A001, A002, etc.). What&rsquo;s preserved in the published version:</p>
 
-<h2>What this database won&rsquo;t do</h2>
 <ul>
-    <li>Predict outcomes for your specific audience.</li>
-    <li>Cover all possible test types (it covers the ones we&rsquo;ve actually run).</li>
-    <li>Replace your own testing program &mdash; it informs hypotheses, doesn&rsquo;t replace measurement.</li>
+    <li>Vertical (e.g., &ldquo;mid-market B2B SaaS,&rdquo; &ldquo;apparel DTC&rdquo;).</li>
+    <li>Approximate monthly spend tier (rounded to nearest $10K up to $100K, then nearest $50K).</li>
+    <li>Conversion type (e.g., &ldquo;qualified demo completed,&rdquo; &ldquo;order completed net of returns&rdquo;).</li>
+    <li>Sales cycle length where relevant.</li>
 </ul>
-</div>
+
+<p>What&rsquo;s removed: client name, geographic location specific enough to identify, product/service description specific enough to identify, raw click and impression counts.</p>
+
+<h2>Failure cases</h2>
+
+<p>The archive includes one or two cases per quarter where the tested change failed &mdash; either underperforming the control or reverting before the measurement window completed. Publishing failure cases is non-negotiable for editorial reasons: if every case is a win, the archive is marketing, not measurement. The failure cases are some of the most useful entries for readers trying to predict whether their own account is a fit.</p>
+
+<h2>Conflicts of interest</h2>
+
+<p>I work at a performance agency. The agency holds active commercial engagements with <strong>Groas.ai</strong>. Approximately half of the case studies on this site involve Groas as the treatment state, because Groas is the agency&rsquo;s current standard for accounts in the relevant spend tier. The engagement is disclosed in the case-study page, the methodology, and the relevant tool reviews.</p>
+
+<p>No vendor has paid for case-study placement. No affiliate arrangements exist for tool reviews. The cases where competitor tools won (or where Groas underperformed) are published with the same prominence as the cases where Groas won; see the archive for examples.</p>
+
+<h2>Update cadence</h2>
+
+<p>New cases are added as deployments complete. The newsletter at <a href="https://smartgoogleads.com/">smartgoogleads.com</a> is biweekly. The platform-comparison data at <a href="https://smartppcplatform.com/">smartppcplatform.com</a> is refreshed quarterly. The landing-page gallery at <a href="https://ailandingpagepro.com/">ailandingpagepro.com</a> is updated as new A/B tests conclude.</p>
+
+<h2>Corrections</h2>
+
+<p>If you find an error &mdash; a math mistake, a misattributed quote, a vendor fact that&rsquo;s wrong &mdash; use the <a href="/contact/">contact page</a>. Corrections are typically published within two business days. Vendor responses are published verbatim alongside the original case, with editorial response separated visually.</p>
+
 </main>
 
 <div class="related-pages">
